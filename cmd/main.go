@@ -1,9 +1,16 @@
 package main
 
 import (
-	greeting "hirenpandit/go-changelog/pkg"
+	"fmt"
+	"hirenpandit/go-changelog/pkg/logs"
 )
 
 func main() {
-	greeting.Greet("John")
+
+	logsSlice := logs.Logs()
+
+	for i, l := range logsSlice {
+		fmt.Printf("%d log > %s \n", i, l)
+	}
+
 }
