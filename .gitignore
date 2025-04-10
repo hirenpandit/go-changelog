@@ -1,0 +1,2 @@
+# Ignore binary from build folder
+bin/**
