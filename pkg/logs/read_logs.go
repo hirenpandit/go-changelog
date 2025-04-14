@@ -9,8 +9,8 @@ import (
 )
 
 type FLog struct {
-	Msg  string `json:"Message"`
-	Date string `json:"Date"`
+	Msg  string    `json:"Message"`
+	Date time.Time `json:"Date"`
 }
 
 /*
@@ -43,7 +43,15 @@ func Logs() []FLog {
 			fmt.Println("not expected format of log >", s)
 		}
 		log := strings.TrimSuffix(s[1], ")")
-		formattedLogs = append(formattedLogs, FLog{Msg: log, Date: time.Now().String()})
+
+		_, after, _ := strings.Cut(log, ", ")
+
+		logDate, err := time.Parse("2006-01-02", after)
+		if err != nil {
+			fmt.Println("error parsing date", after, "in format", "yyyy-mm-dd", "error", err)
+		}
+
+		formattedLogs = append(formattedLogs, FLog{Msg: log, Date: logDate})
 	}
 
 	return formattedLogs
