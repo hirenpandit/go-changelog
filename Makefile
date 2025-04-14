@@ -16,3 +16,5 @@ build:
 clean:
 	@echo "Cleaning..."
 	@rm -rf $(BINARY_DIR)
+run:
+	@go run ./cmd/*.go
