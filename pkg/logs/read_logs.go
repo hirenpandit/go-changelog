@@ -9,8 +9,8 @@ import (
 )
 
 type FLog struct {
-	Msg  string
-	Date string
+	Msg  string `json:"Message"`
+	Date string `json:"Date"`
 }
 
 /*
