@@ -2,7 +2,6 @@ package main
 
 import (
 	// "encoding/json"
-	"fmt"
 	"hirenpandit/go-changelog/pkg/logs"
 	"os"
 	// "log/slog"
@@ -11,8 +10,6 @@ import (
 func main() {
 
 	args := os.Args[1:]
-
-	fmt.Println(">>>", args)
 
 	var metadata logs.Metadata = logs.Metadata{
 		Name:       args[0],
