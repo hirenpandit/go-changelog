@@ -17,10 +17,10 @@ type FLog struct {
 const DATE_FORMAT string = "2006-01-02"
 
 /*
-`Logs` executes git command to get the logs on current branch.
+`ReadLog` executes git command to get the logs on current branch.
 it returns slice of string each item in slice contains single line log
 */
-func Logs() []FLog {
+func ReadLog() []FLog {
 
 	cmd := exec.Command("git", "log", "--pretty=reference")
 

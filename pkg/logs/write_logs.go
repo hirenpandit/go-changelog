@@ -9,9 +9,15 @@ import (
 
 var logger slog.Logger = *slog.Default()
 
+type Metadata struct {
+	Name       string
+	Version    string
+	DateFormat string
+}
+
 const LOG_FILENAME = "changelog.md"
 
-func WriteLog(logSlice []FLog) {
+func WriteLog(logSlice []FLog, metadata Metadata) {
 
 	isExist := checkLogFileExist()
 
@@ -32,10 +38,10 @@ func WriteLog(logSlice []FLog) {
 
 	logger.Info("Ready to write logs to ", "logfile:", logfile.Name())
 
-	writeLogHeader(logfile)
+	writeLogHeader(logfile, metadata)
 
 	for _, flog := range logSlice {
-		bytesToWrite := []byte(flog.Date.Format(DATE_FORMAT) + " : " + flog.Msg + "\n")
+		bytesToWrite := []byte("\t" + flog.Date.Format(DATE_FORMAT) + " : " + flog.Msg + "\n")
 		logfile.Write([]byte(bytesToWrite))
 	}
 
@@ -66,14 +72,14 @@ func createLogFile() *os.File {
 }
 
 // writing header for new logs
-func writeLogHeader(file *os.File) {
+func writeLogHeader(file *os.File, metadata Metadata) {
 
 	logger.Info("Writing header to", "logfile:", file)
 
 	today := time.Now().Format(DATE_FORMAT)
 
-	header := "--------------------------------------\n %s \n--------------------------------------\n"
-	header = fmt.Sprintf(header, today)
+	header := "--------------------------------------\n %s-%s (%s)\n--------------------------------------\n"
+	header = fmt.Sprintf(header, metadata.Name, metadata.Version, today)
 	_, err := file.Write([]byte(header))
 	if err != nil {
 		logger.Error(
