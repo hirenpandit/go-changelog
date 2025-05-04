@@ -13,6 +13,9 @@ type FLog struct {
 	Date time.Time `json:"Date"`
 }
 
+// yyyy-MM-dd format
+const DATE_FORMAT string = "2006-01-02"
+
 /*
 `Logs` executes git command to get the logs on current branch.
 it returns slice of string each item in slice contains single line log
@@ -44,9 +47,9 @@ func Logs() []FLog {
 		}
 		log := strings.TrimSuffix(s[1], ")")
 
-		_, after, _ := strings.Cut(log, ", ")
+		log, after, _ := strings.Cut(log, ", ")
 
-		logDate, err := time.Parse("2006-01-02", after)
+		logDate, err := time.Parse(DATE_FORMAT, after)
 		if err != nil {
 			fmt.Println("error parsing date", after, "in format", "yyyy-mm-dd", "error", err)
 		}
